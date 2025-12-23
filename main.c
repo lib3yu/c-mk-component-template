@@ -19,7 +19,7 @@ extern "C" {
 #endif /* __cplusplus */
 
 /* Includes ------------------------------------------------------------------*/
-
+#include "queue.h"
 /* Private includes ----------------------------------------------------------*/
 #include <stdio.h>
 #include <stdint.h>
@@ -45,7 +45,11 @@ int main(int argc, char const *argv[])
     (void)argc;
     (void)argv;
 
-    printf("Hello World!\n");    
+    queue_t q;
+    int ret = newqueue(&q, sizeof(int), 32);
+
+    printf("Hello World!, %d\n", ret);
+    
     return 0;
 }
 
