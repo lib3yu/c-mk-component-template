@@ -32,6 +32,7 @@ BUILD_DIR = build
 C_SOURCES := 
 C_SOURCES += main.c 
 C_SOURCES += libs/queue/queue.c
+C_SOURCES += libs/log.c/log.c
 
 
 #######################################
@@ -53,7 +54,9 @@ C_DEFS :=
 # C includes
 C_INCLUDES := 
 C_INCLUDES += -Iinclude
+C_INCLUDES += -Ilibs
 C_INCLUDES += -Ilibs/queue
+C_INCLUDES += -Ilibs/log.c
 
 # Common flags for both C and C++
 COMMON_FLAGS := $(OPT) -Wall -fdata-sections -ffunction-sections

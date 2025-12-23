@@ -20,6 +20,7 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "queue.h"
+#include "log.c/log.h"
 /* Private includes ----------------------------------------------------------*/
 #include <stdio.h>
 #include <stdint.h>
@@ -37,6 +38,10 @@ extern "C" {
 /* Private define 2 ----------------------------------------------------------*/
 /* Private macro 2 -----------------------------------------------------------*/
 /* Private function code -----------------------------------------------------*/
+static int _log_init(void)
+{
+    return 0;
+}
 /* Public application code ---------------------------------------------------*/
 
 /* Entry point ---------------------------------------------------------------*/
@@ -44,6 +49,10 @@ int main(int argc, char const *argv[])
 {
     (void)argc;
     (void)argv;
+
+    _log_init();
+
+    log_info("Hello log.c\n");
 
     queue_t q;
     int ret = newqueue(&q, sizeof(int), 32);
