@@ -5,6 +5,7 @@ Simple GNU Make–based C project template with thread-safe components.
 - `main.c` implements thread-safe logging initialization and queue demonstration
 - Thread-safe queue library (`libs/queue/`) for message passing using pthreads
 - Simple logging library (`libs/log.c/`) with multiple log levels and thread-safe mutex protection
+- Unity test framework (`libs/unity/`) for unit testing
 - `template.c` / `template.h` provide scaffolding for new modules
 - `Makefile` drives the build, keeping outputs under `build/`
 
@@ -26,6 +27,7 @@ Hello World!, 0
 - `main.c`: application entry point with thread-safe logging
 - `libs/queue/`: thread-safe circular buffer implementation
 - `libs/log.c/`: simple logging library by rxi
+- `libs/unity/`: Unity test framework for C unit testing
 - `template.c` / `template.h`: example module structure
 
 ## 中文说明
@@ -49,4 +51,5 @@ Hello World!, 0
 - `main.c`：程序入口与线程安全日志
 - `libs/queue/`：线程安全队列实现
 - `libs/log.c/`：日志库
+- `libs/unity/`：Unity 单元测试框架
 - `template.c` / `template.h`：预留的模块结构
