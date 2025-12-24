@@ -63,6 +63,7 @@ COMMON_FLAGS := $(OPT) -Wall -fdata-sections -ffunction-sections
 
 # C specific flags
 CFLAGS := $(C_DEFS) $(C_INCLUDES) $(COMMON_FLAGS)
+CFLAGS += -pthread
 
 ifeq ($(DEBUG), 1)
 CFLAGS += -g -gdwarf-2
@@ -74,7 +75,7 @@ CFLAGS += -MMD -MP
 #######################################
 # LDFLAGS
 #######################################
-LIBS = -lc -lm 
+LIBS = -lc -lm -lpthread 
 LIBDIR = 
 LDFLAGS = $(LIBDIR) $(LIBS) -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref -Wl,--gc-sections
 
