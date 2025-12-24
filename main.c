@@ -19,6 +19,7 @@ extern "C" {
 #endif /* __cplusplus */
 
 /* Includes ------------------------------------------------------------------*/
+#include "unity.h"
 #include "queue.h"
 #include "log.c/log.h"
 /* Private includes ----------------------------------------------------------*/
@@ -74,6 +75,10 @@ static int _log_init(void)
 }
 /* Public application code ---------------------------------------------------*/
 
+/* Unity Test Setup / Teardown -----------------------------------------------*/
+void setUp(void) {}
+void tearDown(void) {}
+
 /* Entry point ---------------------------------------------------------------*/
 int main(int argc, char const *argv[])
 {
@@ -87,9 +92,31 @@ int main(int argc, char const *argv[])
     queue_t q;
     int ret = newqueue(&q, sizeof(int), 32);
 
-    printf("Hello World!, %d\n", ret);
-    
-    return 0;
+    printf("Hello World!, %d\n\n", ret);
+
+    printf("-----------------------\n");
+    printf("---- Unity Testing ----\n");
+
+    /* Unity unit tests */
+    UNITY_BEGIN();
+
+    /* Test simple assertions */
+    TEST_ASSERT_TRUE(1);
+    TEST_ASSERT_FALSE(0);
+    TEST_ASSERT_NULL(NULL);
+    TEST_ASSERT_NOT_NULL((void *)1);
+
+    /* Test integer equality */
+    int a = 5;
+    int b = 5;
+    TEST_ASSERT_EQUAL_INT(a, b);
+    TEST_ASSERT_EQUAL(10, 5 + 5);
+
+    /* Test string equality */
+    const char *str = "Hello";
+    TEST_ASSERT_EQUAL_STRING("Hello", str);
+
+    return UNITY_END();
 }
 
 
