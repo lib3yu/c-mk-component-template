@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- TMC4671 API integration from Analog Devices TMC-API library
+- Lua 5.5 scripting engine (onelua.c single-file build)
+- Lua integration tests and Unity test cases
+
+### Changed
+
+- Project purpose: TMC4671 API simulation and high-level interface design with Lua
+
 ## [0.1.0] - 2025-12-24
 
 ### Added
@@ -17,5 +27,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Unity test framework for unit testing (`libs/unity/`)
 - Module template files (`template.c`, `template.h`)
 
-[Unreleased]: https://github.com/akaka/c-mk-component-template/compare/v0.1.0...HEAD
-[0.1.0]: https://github.com/akaka/c-mk-component-template/releases/tag/v0.1.0
+[Unreleased]: https://github.com/akaka/tmc4671/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/akaka/tmc4671/releases/tag/v0.1.0
