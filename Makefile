@@ -34,6 +34,7 @@ C_SOURCES += main.c
 C_SOURCES += libs/queue/queue.c
 C_SOURCES += libs/log.c/log.c
 C_SOURCES += libs/unity/unity.c
+C_SOURCES += libs/lua-src/src/onelua.c
 
 
 #######################################
@@ -50,7 +51,7 @@ SZ = $(PREFIX)size
 # CFLAGS/CXXFLAGS
 #######################################
 # C defines
-C_DEFS := 
+C_DEFS := -DMAKE_LIB 
 
 # C includes
 C_INCLUDES :=
@@ -59,13 +60,14 @@ C_INCLUDES += -Ilibs
 C_INCLUDES += -Ilibs/queue
 C_INCLUDES += -Ilibs/log.c
 C_INCLUDES += -Ilibs/unity
+C_INCLUDES += -Ilibs/lua-src/src
 
 # Common flags for both C and C++
 COMMON_FLAGS := $(OPT) -Wall -fdata-sections -ffunction-sections
 
 # C specific flags
 CFLAGS := $(C_DEFS) $(C_INCLUDES) $(COMMON_FLAGS)
-CFLAGS += -pthread
+CFLAGS += -pthread -DLUA_USE_LINUX
 
 ifeq ($(DEBUG), 1)
 CFLAGS += -g -gdwarf-2
@@ -77,7 +79,7 @@ CFLAGS += -MMD -MP
 #######################################
 # LDFLAGS
 #######################################
-LIBS = -lc -lm -lpthread 
+LIBS = -lc -lm -lpthread -ldl 
 LIBDIR = 
 LDFLAGS = $(LIBDIR) $(LIBS) -Wl,-Map=$(BUILD_DIR)/$(TARGET).map,--cref -Wl,--gc-sections
 

@@ -22,6 +22,9 @@ extern "C" {
 #include "unity.h"
 #include "queue.h"
 #include "log.c/log.h"
+#include "lua.h"
+#include "lauxlib.h"
+#include "lualib.h"
 /* Private includes ----------------------------------------------------------*/
 #include <stdio.h>
 #include <stdint.h>
@@ -73,11 +76,59 @@ static int _log_init(void)
     log_info("Log system initialized with thread-safe mutex");
     return 0;
 }
+
+/* Lua integration test ------------------------------------------------------*/
+static int test_lua_integration(void)
+{
+    lua_State *L = luaL_newstate();
+    if (L == NULL) {
+        log_error("Failed to create Lua state");
+        return -1;
+    }
+
+    luaL_openlibs(L);
+
+    const char *lua_code = "print('Hello from Lua 5.5!'); return 42";
+    int ret = luaL_dostring(L, lua_code);
+
+    if (ret != LUA_OK) {
+        log_error("Lua error: %s", lua_tostring(L, -1));
+        lua_pop(L, 1);
+        lua_close(L);
+        return -1;
+    }
+
+    if (lua_isinteger(L, -1)) {
+        int result = (int)lua_tointeger(L, -1);
+        log_info("Lua returned: %d", result);
+    }
+
+    lua_close(L);
+    return 0;
+}
 /* Public application code ---------------------------------------------------*/
 
 /* Unity Test Setup / Teardown -----------------------------------------------*/
 void setUp(void) {}
 void tearDown(void) {}
+
+/* Lua Unity tests -----------------------------------------------------------*/
+void test_lua_state_creation(void)
+{
+    lua_State *L = luaL_newstate();
+    TEST_ASSERT_NOT_NULL(L);
+    lua_close(L);
+}
+
+void test_lua_dostring(void)
+{
+    lua_State *L = luaL_newstate();
+    luaL_openlibs(L);
+    int ret = luaL_dostring(L, "return 1 + 1");
+    TEST_ASSERT_EQUAL_INT(LUA_OK, ret);
+    TEST_ASSERT_EQUAL_INT(2, (int)lua_tointeger(L, -1));
+    lua_close(L);
+}
 
 /* Entry point ---------------------------------------------------------------*/
 int main(int argc, char const *argv[])
@@ -93,6 +144,12 @@ int main(int argc, char const *argv[])
     int ret = newqueue(&q, sizeof(int), 32);
 
     printf("Hello World!, %d\n\n", ret);
+
+    /* Test Lua integration */
+    printf("-----------------------\n");
+    printf("---- Lua Testing ------\n");
+    test_lua_integration();
+    printf("\n");
 
     printf("-----------------------\n");
     printf("---- Unity Testing ----\n");
@@ -115,6 +172,10 @@ int main(int argc, char const *argv[])
     /* Test string equality */
     const char *str = "Hello";
     TEST_ASSERT_EQUAL_STRING("Hello", str);
+
+    /* Lua tests */
+    RUN_TEST(test_lua_state_creation);
+    RUN_TEST(test_lua_dostring);
 
     return UNITY_END();
 }
