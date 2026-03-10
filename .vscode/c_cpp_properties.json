@@ -8,7 +8,9 @@
                 "${workspaceFolder}/libs/queue",
                 "${workspaceFolder}/libs/log.c",
                 "${workspaceFolder}/libs/unity",
-                "${workspaceFolder}/libs/lua-src/src"
+                "${workspaceFolder}/libs/lua-src/src",
+                "${workspaceFolder}/libs/tmc-api/tmc/TMC4671",
+                "${workspaceFolder}/libs/tmc-api/tmc"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",

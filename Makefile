@@ -39,6 +39,7 @@ C_SOURCES += libs/queue/queue.c
 C_SOURCES += libs/log.c/log.c
 C_SOURCES += libs/unity/unity.c
 C_SOURCES += libs/lua-src/src/onelua.c
+C_SOURCES += tests/test_tmc4671.c
 
 
 #######################################
@@ -67,6 +68,7 @@ C_INCLUDES += -Ilibs/queue
 C_INCLUDES += -Ilibs/log.c
 C_INCLUDES += -Ilibs/unity
 C_INCLUDES += -Ilibs/lua-src/src
+C_INCLUDES += -Itests
 
 # Common flags for both C and C++
 COMMON_FLAGS := $(OPT) -Wall -fdata-sections -ffunction-sections

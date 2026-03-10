@@ -24,11 +24,22 @@ extern "C" {
 #include "lauxlib.h"
 #include "lualib.h"
 #include "tmc4671_sim.h"
+#include "TMC4671.h"
+#include "unity.h"
 /* Private includes ----------------------------------------------------------*/
 #include <stdio.h>
 #include <stdint.h>
 #include <pthread.h>
 #include <stdbool.h>
+
+/* External test functions */
+extern void test_ic0_register_read_write(void);
+extern void test_ic1_register_read_write(void);
+extern void test_ic0_target_velocity(void);
+extern void test_ic1_target_velocity(void);
+extern void test_ic0_target_position(void);
+extern void test_ic1_target_position(void);
+extern void test_two_ic_isolation(void);
 
 /* Private variables ---------------------------------------------------------*/
 static pthread_mutex_t log_mutex = PTHREAD_MUTEX_INITIALIZER;
@@ -56,27 +67,23 @@ static int _log_init(void)
     return 0;
 }
 
-/* Entry point ---------------------------------------------------------------*/
+/* Entry point */
 int main(int argc, char const *argv[])
 {
     (void)argc;
     (void)argv;
 
     _log_init();
-
     log_info("TMC4671 Lua SPI Simulator");
 
-    /* 创建 Lua 状态机 */
     lua_State *L = luaL_newstate();
     if (L == NULL) {
         log_error("Failed to create Lua state");
         return 1;
     }
 
-    /* 打开 Lua 标准库 */
     luaL_openlibs(L);
 
-    /* 加载 SPI 模拟脚本 */
     if (luaL_dofile(L, "lua/tmc4671_sim_spi.lua") != LUA_OK) {
         log_error("Failed to load Lua script: %s", lua_tostring(L, -1));
         lua_pop(L, 1);
@@ -84,14 +91,23 @@ int main(int argc, char const *argv[])
         return 1;
     }
 
-    /* 设置 Lua 状态机 (用于 SPI 回调) */
     tmc4671_sim_set_lua_state(L);
 
-    log_info("TMC4671 simulator ready.");
+    log_info("Running tests...");
+
+    UNITY_BEGIN();
+    RUN_TEST(test_ic0_register_read_write);
+    RUN_TEST(test_ic1_register_read_write);
+    RUN_TEST(test_ic0_target_velocity);
+    RUN_TEST(test_ic1_target_velocity);
+    RUN_TEST(test_ic0_target_position);
+    RUN_TEST(test_ic1_target_position);
+    RUN_TEST(test_two_ic_isolation);
+    int result = UNITY_END();
 
     lua_close(L);
 
-    return 0;
+    return result;
 }
 
 
