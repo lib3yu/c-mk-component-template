@@ -7,7 +7,8 @@
                 "${workspaceFolder}/libs",
                 "${workspaceFolder}/libs/queue",
                 "${workspaceFolder}/libs/log.c",
-                "${workspaceFolder}/libs/unity"
+                "${workspaceFolder}/libs/unity",
+                "${workspaceFolder}/libs/lua-src/src"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",

@@ -30,6 +30,10 @@ BUILD_DIR = build
 ######################################
 # C sources
 C_SOURCES :=
+# TMC4671 模拟器
+C_SOURCES += src/tmc4671_sim.c
+# TMC4671 API
+C_SOURCES += libs/tmc-api/tmc/TMC4671/TMC4671.c
 C_SOURCES += main.c
 C_SOURCES += libs/queue/queue.c
 C_SOURCES += libs/log.c/log.c
@@ -56,7 +60,9 @@ C_DEFS := -DMAKE_LIB
 # C includes
 C_INCLUDES :=
 C_INCLUDES += -Iinclude
+C_INCLUDES += -Isrc
 C_INCLUDES += -Ilibs
+C_INCLUDES += -Ilibs/tmc-api/tmc/TMC4671
 C_INCLUDES += -Ilibs/queue
 C_INCLUDES += -Ilibs/log.c
 C_INCLUDES += -Ilibs/unity
